@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OlezhikModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Dictonary">
+    <Key>
+      <PropertyRef Name="Id_dictonary" />
+    </Key>
+    <Property Name="Id_dictonary" Type="Int32" Nullable="false" />
+    <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Translate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Id_lections" Type="Int32" />
+    <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Lections" Relationship="Self.FK_Dictonary_Lections" FromRole="Dictonary" ToRole="Lections" />
+  </EntityType>
+  <EntityType Name="Language">
+    <Key>
+      <PropertyRef Name="Id_language" />
+    </Key>
+    <Property Name="Id_language" Type="Int32" Nullable="false" />
+    <Property Name="TitleEnglish" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TitleRussian" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Lections" Relationship="Self.FK_Lections_Language" FromRole="Language" ToRole="Lections" />
+  </EntityType>
+  <EntityType Name="Lections">
+    <Key>
+      <PropertyRef Name="Id_lections" />
+    </Key>
+    <Property Name="Id_lections" Type="Int32" Nullable="false" />
+    <Property Name="Id_language" Type="Int32" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Id_levels" Type="Int32" />
+    <NavigationProperty Name="Dictonary" Relationship="Self.FK_Dictonary_Lections" FromRole="Lections" ToRole="Dictonary" />
+    <NavigationProperty Name="Language" Relationship="Self.FK_Lections_Language" FromRole="Lections" ToRole="Language" />
+    <NavigationProperty Name="Levels" Relationship="Self.FK_Lections_Levels" FromRole="Lections" ToRole="Levels" />
+    <NavigationProperty Name="Test" Relationship="Self.FK_Lections_Test" FromRole="Lections" ToRole="Test" />
+    <NavigationProperty Name="Progress" Relationship="Self.FK_Progress_Lections" FromRole="Lections" ToRole="Progress" />
+  </EntityType>
+  <EntityType Name="Levels">
+    <Key>
+      <PropertyRef Name="Id_level" />
+    </Key>
+    <Property Name="Id_level" Type="Int32" Nullable="false" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Lections" Relationship="Self.FK_Lections_Levels" FromRole="Levels" ToRole="Lections" />
+  </EntityType>
+  <EntityType Name="Progress">
+    <Key>
+      <PropertyRef Name="Id_progress" />
+    </Key>
+    <Property Name="Id_progress" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_user" Type="Int32" />
+    <Property Name="Id_lecture" Type="Int32" />
+    <NavigationProperty Name="Lections" Relationship="Self.FK_Progress_Lections" FromRole="Progress" ToRole="Lections" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Progress_Users" FromRole="Progress" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Test">
+    <Key>
+      <PropertyRef Name="Id_test" />
+    </Key>
+    <Property Name="Id_test" Type="Int32" Nullable="false" />
+    <Property Name="Id_lections" Type="Int32" />
+    <Property Name="Questions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Lections" Relationship="Self.FK_Lections_Test" FromRole="Test" ToRole="Lections" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id_Users" />
+    </Key>
+    <Property Name="Id_Users" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Progress" Relationship="Self.FK_Progress_Users" FromRole="Users" ToRole="Progress" />
+  </EntityType>
+  <Association Name="FK_Dictonary_Lections">
+    <End Role="Lections" Type="Self.Lections" Multiplicity="0..1" />
+    <End Role="Dictonary" Type="Self.Dictonary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lections">
+        <PropertyRef Name="Id_lections" />
+      </Principal>
+      <Dependent Role="Dictonary">
+        <PropertyRef Name="Id_lections" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lections_Language">
+    <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
+    <End Role="Lections" Type="Self.Lections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Language">
+        <PropertyRef Name="Id_language" />
+      </Principal>
+      <Dependent Role="Lections">
+        <PropertyRef Name="Id_language" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lections_Levels">
+    <End Role="Levels" Type="Self.Levels" Multiplicity="0..1" />
+    <End Role="Lections" Type="Self.Lections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Levels">
+        <PropertyRef Name="Id_level" />
+      </Principal>
+      <Dependent Role="Lections">
+        <PropertyRef Name="Id_levels" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lections_Test">
+    <End Role="Test" Type="Self.Test" Multiplicity="0..1" />
+    <End Role="Lections" Type="Self.Lections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Test">
+        <PropertyRef Name="Id_test" />
+      </Principal>
+      <Dependent Role="Lections">
+        <PropertyRef Name="Id_language" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Progress_Lections">
+    <End Role="Lections" Type="Self.Lections" Multiplicity="0..1" />
+    <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lections">
+        <PropertyRef Name="Id_lections" />
+      </Principal>
+      <Dependent Role="Progress">
+        <PropertyRef Name="Id_lecture" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Progress_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id_Users" />
+      </Principal>
+      <Dependent Role="Progress">
+        <PropertyRef Name="Id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OlezhikEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Dictonary" EntityType="Self.Dictonary" />
+    <EntitySet Name="Language" EntityType="Self.Language" />
+    <EntitySet Name="Lections" EntityType="Self.Lections" />
+    <EntitySet Name="Levels" EntityType="Self.Levels" />
+    <EntitySet Name="Progress" EntityType="Self.Progress" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Test" EntityType="Self.Test" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK_Dictonary_Lections" Association="Self.FK_Dictonary_Lections">
+      <End Role="Lections" EntitySet="Lections" />
+      <End Role="Dictonary" EntitySet="Dictonary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lections_Language" Association="Self.FK_Lections_Language">
+      <End Role="Language" EntitySet="Language" />
+      <End Role="Lections" EntitySet="Lections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lections_Levels" Association="Self.FK_Lections_Levels">
+      <End Role="Levels" EntitySet="Levels" />
+      <End Role="Lections" EntitySet="Lections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lections_Test" Association="Self.FK_Lections_Test">
+      <End Role="Test" EntitySet="Test" />
+      <End Role="Lections" EntitySet="Lections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Progress_Lections" Association="Self.FK_Progress_Lections">
+      <End Role="Lections" EntitySet="Lections" />
+      <End Role="Progress" EntitySet="Progress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Progress_Users" Association="Self.FK_Progress_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Progress" EntitySet="Progress" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

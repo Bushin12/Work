@@ -1,0 +1,42 @@
+﻿<Page x:Class="English_2._0.Pages.HardTest"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:English_2._0.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="HardTest">
+
+    <Grid>
+        <Grid.RowDefinitions>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="3" TextWrapping="Wrap" Text="Вам представлено предложение на русском, а также даны слова на английском. Вам нужно нажать эти слова так чтобы получилось данное предложение на инсотранном." TextAlignment="Center" Margin="40 0 40 0" Style="{StaticResource defaultText}"/>
+        <!-- RussianText -->
+        <TextBlock x:Name="RussianText" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" Width="460" Height="200" Margin="40 80 40 0" Style="{StaticResource defaultText}"/>
+
+        <!-- Answer -->
+        <TextBlock x:Name="Answer" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Width="500" TextAlignment="Center" Margin="40, 120, 40, 0" Style="{StaticResource defaultText}"/>
+
+        <!-- LabelStackPanel -->
+        <StackPanel x:Name="LabelStackPanel" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="40, 150, 40, 0" TextBlock.FontSize="14" TextBlock.FontWeight="Bold" TextBlock.FontFamily="Microsoft YaHei" />
+
+
+
+        <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,100" Height="40">
+            <!-- Reset Button -->
+            <Button Content="Сбросить" Click="Reset_Click" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="145" Height="40" Margin="10, 0, 5, 0" Style="{StaticResource defaultButton}"/>
+            <!-- CheckAnswer Button -->
+            <Button Content="Ответить" Click="CheckAnswer_Click" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="145" Height="40" Margin="5, 0, 10, 0" Style="{StaticResource defaultButton}"/>  
+        </StackPanel>
+        
+        <!-- ProgressBar -->
+        <ProgressBar x:Name="ProgressBar" Grid.ColumnSpan="3" Grid.Column="0" Margin="40" VerticalAlignment="Bottom" Height="40"/>
+    </Grid>
+</Page>

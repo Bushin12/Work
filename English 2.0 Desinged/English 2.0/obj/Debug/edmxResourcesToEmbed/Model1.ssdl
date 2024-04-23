@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище EnglishModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Dictonary">
+    <Key>
+      <PropertyRef Name="Id_dictonary" />
+    </Key>
+    <Property Name="Id_dictonary" Type="int" Nullable="false" />
+    <Property Name="Text" Type="nvarchar(max)" />
+    <Property Name="Translate" Type="nvarchar(max)" />
+    <Property Name="Id_lections" Type="int" />
+    <Property Name="Image" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Language">
+    <Key>
+      <PropertyRef Name="Id_language" />
+    </Key>
+    <Property Name="Id_language" Type="int" Nullable="false" />
+    <Property Name="TitleEnglish" Type="nvarchar" MaxLength="50" />
+    <Property Name="TitleRussian" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Lections">
+    <Key>
+      <PropertyRef Name="Id_lections" />
+    </Key>
+    <Property Name="Id_lections" Type="int" Nullable="false" />
+    <Property Name="Id_language" Type="int" />
+    <Property Name="Title" Type="nvarchar(max)" />
+    <Property Name="Id_levels" Type="int" />
+  </EntityType>
+  <EntityType Name="Levels">
+    <Key>
+      <PropertyRef Name="Id_level" />
+    </Key>
+    <Property Name="Id_level" Type="int" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Progress">
+    <Key>
+      <PropertyRef Name="Id_progress" />
+    </Key>
+    <Property Name="Id_progress" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_user" Type="int" />
+    <Property Name="Id_lecture" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Test">
+    <Key>
+      <PropertyRef Name="Id_test" />
+    </Key>
+    <Property Name="Id_test" Type="int" Nullable="false" />
+    <Property Name="Id_lections" Type="int" />
+    <Property Name="Questions" Type="nvarchar(max)" />
+    <Property Name="Answer" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id_Users" />
+    </Key>
+    <Property Name="Id_Users" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Surname" Type="nvarchar" MaxLength="50" />
+    <Property Name="Login" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Dictonary_Lections">
+    <End Role="Lections" Type="Self.Lections" Multiplicity="0..1" />
+    <End Role="Dictonary" Type="Self.Dictonary" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lections">
+        <PropertyRef Name="Id_lections" />
+      </Principal>
+      <Dependent Role="Dictonary">
+        <PropertyRef Name="Id_lections" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lections_Language">
+    <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
+    <End Role="Lections" Type="Self.Lections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Language">
+        <PropertyRef Name="Id_language" />
+      </Principal>
+      <Dependent Role="Lections">
+        <PropertyRef Name="Id_language" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lections_Levels">
+    <End Role="Levels" Type="Self.Levels" Multiplicity="0..1" />
+    <End Role="Lections" Type="Self.Lections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Levels">
+        <PropertyRef Name="Id_level" />
+      </Principal>
+      <Dependent Role="Lections">
+        <PropertyRef Name="Id_levels" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lections_Test">
+    <End Role="Test" Type="Self.Test" Multiplicity="0..1" />
+    <End Role="Lections" Type="Self.Lections" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Test">
+        <PropertyRef Name="Id_test" />
+      </Principal>
+      <Dependent Role="Lections">
+        <PropertyRef Name="Id_language" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Progress_Lections">
+    <End Role="Lections" Type="Self.Lections" Multiplicity="0..1" />
+    <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lections">
+        <PropertyRef Name="Id_lections" />
+      </Principal>
+      <Dependent Role="Progress">
+        <PropertyRef Name="Id_lecture" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Progress_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id_Users" />
+      </Principal>
+      <Dependent Role="Progress">
+        <PropertyRef Name="Id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище EnglishModelContainer">
+    <EntitySet Name="Dictonary" EntityType="Self.Dictonary" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lections" EntityType="Self.Lections" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Levels" EntityType="Self.Levels" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Progress" EntityType="Self.Progress" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Dictonary_Lections" Association="Self.FK_Dictonary_Lections">
+      <End Role="Lections" EntitySet="Lections" />
+      <End Role="Dictonary" EntitySet="Dictonary" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lections_Language" Association="Self.FK_Lections_Language">
+      <End Role="Language" EntitySet="Language" />
+      <End Role="Lections" EntitySet="Lections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lections_Levels" Association="Self.FK_Lections_Levels">
+      <End Role="Levels" EntitySet="Levels" />
+      <End Role="Lections" EntitySet="Lections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lections_Test" Association="Self.FK_Lections_Test">
+      <End Role="Test" EntitySet="Test" />
+      <End Role="Lections" EntitySet="Lections" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Progress_Lections" Association="Self.FK_Progress_Lections">
+      <End Role="Lections" EntitySet="Lections" />
+      <End Role="Progress" EntitySet="Progress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Progress_Users" Association="Self.FK_Progress_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Progress" EntitySet="Progress" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

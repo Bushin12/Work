@@ -1,0 +1,487 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище EnglishModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Dictonary">
+          <Key>
+            <PropertyRef Name="Id_dictonary" />
+          </Key>
+          <Property Name="Id_dictonary" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="Translate" Type="nvarchar(max)" />
+          <Property Name="Id_lections" Type="int" />
+          <Property Name="Image" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Id_language" />
+          </Key>
+          <Property Name="Id_language" Type="int" Nullable="false" />
+          <Property Name="TitleEnglish" Type="nvarchar" MaxLength="50" />
+          <Property Name="TitleRussian" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Lections">
+          <Key>
+            <PropertyRef Name="Id_lections" />
+          </Key>
+          <Property Name="Id_lections" Type="int" Nullable="false" />
+          <Property Name="Id_language" Type="int" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Id_levels" Type="int" />
+        </EntityType>
+        <EntityType Name="Levels">
+          <Key>
+            <PropertyRef Name="Id_level" />
+          </Key>
+          <Property Name="Id_level" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Progress">
+          <Key>
+            <PropertyRef Name="Id_progress" />
+          </Key>
+          <Property Name="Id_progress" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_user" Type="int" />
+          <Property Name="Id_lecture" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Id_test" />
+          </Key>
+          <Property Name="Id_test" Type="int" Nullable="false" />
+          <Property Name="Id_lections" Type="int" />
+          <Property Name="Questions" Type="nvarchar(max)" />
+          <Property Name="Answer" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id_Users" />
+          </Key>
+          <Property Name="Id_Users" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Dictonary_Lections">
+          <End Role="Lections" Type="Self.Lections" Multiplicity="0..1" />
+          <End Role="Dictonary" Type="Self.Dictonary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lections">
+              <PropertyRef Name="Id_lections" />
+            </Principal>
+            <Dependent Role="Dictonary">
+              <PropertyRef Name="Id_lections" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lections_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
+          <End Role="Lections" Type="Self.Lections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Id_language" />
+            </Principal>
+            <Dependent Role="Lections">
+              <PropertyRef Name="Id_language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lections_Levels">
+          <End Role="Levels" Type="Self.Levels" Multiplicity="0..1" />
+          <End Role="Lections" Type="Self.Lections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Levels">
+              <PropertyRef Name="Id_level" />
+            </Principal>
+            <Dependent Role="Lections">
+              <PropertyRef Name="Id_levels" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lections_Test">
+          <End Role="Test" Type="Self.Test" Multiplicity="0..1" />
+          <End Role="Lections" Type="Self.Lections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id_test" />
+            </Principal>
+            <Dependent Role="Lections">
+              <PropertyRef Name="Id_language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Progress_Lections">
+          <End Role="Lections" Type="Self.Lections" Multiplicity="0..1" />
+          <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lections">
+              <PropertyRef Name="Id_lections" />
+            </Principal>
+            <Dependent Role="Progress">
+              <PropertyRef Name="Id_lecture" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Progress_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id_Users" />
+            </Principal>
+            <Dependent Role="Progress">
+              <PropertyRef Name="Id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище EnglishModelContainer">
+          <EntitySet Name="Dictonary" EntityType="Self.Dictonary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Language" EntityType="Self.Language" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lections" EntityType="Self.Lections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Levels" EntityType="Self.Levels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Progress" EntityType="Self.Progress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Dictonary_Lections" Association="Self.FK_Dictonary_Lections">
+            <End Role="Lections" EntitySet="Lections" />
+            <End Role="Dictonary" EntitySet="Dictonary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lections_Language" Association="Self.FK_Lections_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Lections" EntitySet="Lections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lections_Levels" Association="Self.FK_Lections_Levels">
+            <End Role="Levels" EntitySet="Levels" />
+            <End Role="Lections" EntitySet="Lections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lections_Test" Association="Self.FK_Lections_Test">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="Lections" EntitySet="Lections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Progress_Lections" Association="Self.FK_Progress_Lections">
+            <End Role="Lections" EntitySet="Lections" />
+            <End Role="Progress" EntitySet="Progress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Progress_Users" Association="Self.FK_Progress_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Progress" EntitySet="Progress" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EnglishModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Dictonary">
+          <Key>
+            <PropertyRef Name="Id_dictonary" />
+          </Key>
+          <Property Name="Id_dictonary" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Translate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Id_lections" Type="Int32" />
+          <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lections" Relationship="Self.FK_Dictonary_Lections" FromRole="Dictonary" ToRole="Lections" />
+        </EntityType>
+        <EntityType Name="Language">
+          <Key>
+            <PropertyRef Name="Id_language" />
+          </Key>
+          <Property Name="Id_language" Type="Int32" Nullable="false" />
+          <Property Name="TitleEnglish" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TitleRussian" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lections" Relationship="Self.FK_Lections_Language" FromRole="Language" ToRole="Lections" />
+        </EntityType>
+        <EntityType Name="Lections">
+          <Key>
+            <PropertyRef Name="Id_lections" />
+          </Key>
+          <Property Name="Id_lections" Type="Int32" Nullable="false" />
+          <Property Name="Id_language" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Id_levels" Type="Int32" />
+          <NavigationProperty Name="Dictonary" Relationship="Self.FK_Dictonary_Lections" FromRole="Lections" ToRole="Dictonary" />
+          <NavigationProperty Name="Language" Relationship="Self.FK_Lections_Language" FromRole="Lections" ToRole="Language" />
+          <NavigationProperty Name="Levels" Relationship="Self.FK_Lections_Levels" FromRole="Lections" ToRole="Levels" />
+          <NavigationProperty Name="Test" Relationship="Self.FK_Lections_Test" FromRole="Lections" ToRole="Test" />
+          <NavigationProperty Name="Progress" Relationship="Self.FK_Progress_Lections" FromRole="Lections" ToRole="Progress" />
+        </EntityType>
+        <EntityType Name="Levels">
+          <Key>
+            <PropertyRef Name="Id_level" />
+          </Key>
+          <Property Name="Id_level" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lections" Relationship="Self.FK_Lections_Levels" FromRole="Levels" ToRole="Lections" />
+        </EntityType>
+        <EntityType Name="Progress">
+          <Key>
+            <PropertyRef Name="Id_progress" />
+          </Key>
+          <Property Name="Id_progress" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_user" Type="Int32" />
+          <Property Name="Id_lecture" Type="Int32" />
+          <NavigationProperty Name="Lections" Relationship="Self.FK_Progress_Lections" FromRole="Progress" ToRole="Lections" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Progress_Users" FromRole="Progress" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Id_test" />
+          </Key>
+          <Property Name="Id_test" Type="Int32" Nullable="false" />
+          <Property Name="Id_lections" Type="Int32" />
+          <Property Name="Questions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lections" Relationship="Self.FK_Lections_Test" FromRole="Test" ToRole="Lections" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id_Users" />
+          </Key>
+          <Property Name="Id_Users" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Progress" Relationship="Self.FK_Progress_Users" FromRole="Users" ToRole="Progress" />
+        </EntityType>
+        <Association Name="FK_Dictonary_Lections">
+          <End Role="Lections" Type="Self.Lections" Multiplicity="0..1" />
+          <End Role="Dictonary" Type="Self.Dictonary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lections">
+              <PropertyRef Name="Id_lections" />
+            </Principal>
+            <Dependent Role="Dictonary">
+              <PropertyRef Name="Id_lections" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lections_Language">
+          <End Role="Language" Type="Self.Language" Multiplicity="0..1" />
+          <End Role="Lections" Type="Self.Lections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="Id_language" />
+            </Principal>
+            <Dependent Role="Lections">
+              <PropertyRef Name="Id_language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lections_Levels">
+          <End Role="Levels" Type="Self.Levels" Multiplicity="0..1" />
+          <End Role="Lections" Type="Self.Lections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Levels">
+              <PropertyRef Name="Id_level" />
+            </Principal>
+            <Dependent Role="Lections">
+              <PropertyRef Name="Id_levels" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lections_Test">
+          <End Role="Test" Type="Self.Test" Multiplicity="0..1" />
+          <End Role="Lections" Type="Self.Lections" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id_test" />
+            </Principal>
+            <Dependent Role="Lections">
+              <PropertyRef Name="Id_language" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Progress_Lections">
+          <End Role="Lections" Type="Self.Lections" Multiplicity="0..1" />
+          <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lections">
+              <PropertyRef Name="Id_lections" />
+            </Principal>
+            <Dependent Role="Progress">
+              <PropertyRef Name="Id_lecture" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Progress_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Progress" Type="Self.Progress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id_Users" />
+            </Principal>
+            <Dependent Role="Progress">
+              <PropertyRef Name="Id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EnglishEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Dictonary" EntityType="Self.Dictonary" />
+          <EntitySet Name="Language" EntityType="Self.Language" />
+          <EntitySet Name="Lections" EntityType="Self.Lections" />
+          <EntitySet Name="Levels" EntityType="Self.Levels" />
+          <EntitySet Name="Progress" EntityType="Self.Progress" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Test" EntityType="Self.Test" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Dictonary_Lections" Association="Self.FK_Dictonary_Lections">
+            <End Role="Lections" EntitySet="Lections" />
+            <End Role="Dictonary" EntitySet="Dictonary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lections_Language" Association="Self.FK_Lections_Language">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Lections" EntitySet="Lections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lections_Levels" Association="Self.FK_Lections_Levels">
+            <End Role="Levels" EntitySet="Levels" />
+            <End Role="Lections" EntitySet="Lections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lections_Test" Association="Self.FK_Lections_Test">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="Lections" EntitySet="Lections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Progress_Lections" Association="Self.FK_Progress_Lections">
+            <End Role="Lections" EntitySet="Lections" />
+            <End Role="Progress" EntitySet="Progress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Progress_Users" Association="Self.FK_Progress_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Progress" EntitySet="Progress" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище EnglishModelContainer" CdmEntityContainer="EnglishEntities">
+          <EntitySetMapping Name="Dictonary">
+            <EntityTypeMapping TypeName="EnglishModel.Dictonary">
+              <MappingFragment StoreEntitySet="Dictonary">
+                <ScalarProperty Name="Id_dictonary" ColumnName="Id_dictonary" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Translate" ColumnName="Translate" />
+                <ScalarProperty Name="Id_lections" ColumnName="Id_lections" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Language">
+            <EntityTypeMapping TypeName="EnglishModel.Language">
+              <MappingFragment StoreEntitySet="Language">
+                <ScalarProperty Name="Id_language" ColumnName="Id_language" />
+                <ScalarProperty Name="TitleEnglish" ColumnName="TitleEnglish" />
+                <ScalarProperty Name="TitleRussian" ColumnName="TitleRussian" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lections">
+            <EntityTypeMapping TypeName="EnglishModel.Lections">
+              <MappingFragment StoreEntitySet="Lections">
+                <ScalarProperty Name="Id_lections" ColumnName="Id_lections" />
+                <ScalarProperty Name="Id_language" ColumnName="Id_language" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id_levels" ColumnName="Id_levels" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Levels">
+            <EntityTypeMapping TypeName="EnglishModel.Levels">
+              <MappingFragment StoreEntitySet="Levels">
+                <ScalarProperty Name="Id_level" ColumnName="Id_level" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Progress">
+            <EntityTypeMapping TypeName="EnglishModel.Progress">
+              <MappingFragment StoreEntitySet="Progress">
+                <ScalarProperty Name="Id_progress" ColumnName="Id_progress" />
+                <ScalarProperty Name="Id_user" ColumnName="Id_user" />
+                <ScalarProperty Name="Id_lecture" ColumnName="Id_lecture" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="EnglishModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Test">
+            <EntityTypeMapping TypeName="EnglishModel.Test">
+              <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="Id_test" ColumnName="Id_test" />
+                <ScalarProperty Name="Id_lections" ColumnName="Id_lections" />
+                <ScalarProperty Name="Questions" ColumnName="Questions" />
+                <ScalarProperty Name="Answer" ColumnName="Answer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="EnglishModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id_Users" ColumnName="Id_Users" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

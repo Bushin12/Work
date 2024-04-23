@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище OlezhikModelContainer" CdmEntityContainer="OlezhikEntities">
+    <EntitySetMapping Name="Dictonary">
+      <EntityTypeMapping TypeName="OlezhikModel.Dictonary">
+        <MappingFragment StoreEntitySet="Dictonary">
+          <ScalarProperty Name="Id_dictonary" ColumnName="Id_dictonary" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="Translate" ColumnName="Translate" />
+          <ScalarProperty Name="Id_lections" ColumnName="Id_lections" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Language">
+      <EntityTypeMapping TypeName="OlezhikModel.Language">
+        <MappingFragment StoreEntitySet="Language">
+          <ScalarProperty Name="Id_language" ColumnName="Id_language" />
+          <ScalarProperty Name="TitleEnglish" ColumnName="TitleEnglish" />
+          <ScalarProperty Name="TitleRussian" ColumnName="TitleRussian" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lections">
+      <EntityTypeMapping TypeName="OlezhikModel.Lections">
+        <MappingFragment StoreEntitySet="Lections">
+          <ScalarProperty Name="Id_lections" ColumnName="Id_lections" />
+          <ScalarProperty Name="Id_language" ColumnName="Id_language" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Id_levels" ColumnName="Id_levels" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Levels">
+      <EntityTypeMapping TypeName="OlezhikModel.Levels">
+        <MappingFragment StoreEntitySet="Levels">
+          <ScalarProperty Name="Id_level" ColumnName="Id_level" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Progress">
+      <EntityTypeMapping TypeName="OlezhikModel.Progress">
+        <MappingFragment StoreEntitySet="Progress">
+          <ScalarProperty Name="Id_progress" ColumnName="Id_progress" />
+          <ScalarProperty Name="Id_user" ColumnName="Id_user" />
+          <ScalarProperty Name="Id_lecture" ColumnName="Id_lecture" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="OlezhikModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Test">
+      <EntityTypeMapping TypeName="OlezhikModel.Test">
+        <MappingFragment StoreEntitySet="Test">
+          <ScalarProperty Name="Id_test" ColumnName="Id_test" />
+          <ScalarProperty Name="Id_lections" ColumnName="Id_lections" />
+          <ScalarProperty Name="Questions" ColumnName="Questions" />
+          <ScalarProperty Name="Answer" ColumnName="Answer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="OlezhikModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id_Users" ColumnName="Id_Users" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
