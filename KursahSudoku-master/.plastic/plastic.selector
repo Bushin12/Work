@@ -1,0 +1,4 @@
+repository "KursahSudoku-master@Paracion@cloud"
+  path "/"
+    br "/main"
+    co "/main"
